@@ -46,16 +46,16 @@ export class Column extends BaseColumn<Params> {
     if (!this.checkParams(args.columnParams)) {
       return Promise.resolve({ text: "" });
     }
-    const result = await args.denops.call(
-      "denops#callback#call",
-      args.columnParams.getTextCallbackId,
-      args,
+    const result = ensure(
+      await args.denops.call(
+        "denops#callback#call",
+        args.columnParams.getTextCallbackId,
+        args,
+      ),
+      (x: unknown): x is GetTextResult => {
+        return isGetTextResult(x);
+      },
     );
-    if (!isGetTextResult(result)) {
-      return Promise.resolve({ text: "" });
-    }
-    // TODO: もうちょいunkownutil周りを調べとく
-    // ここでの`result`はGetTextResult型そのものではなく、該当のメンバーを持つとチェックされたもの
     return result;
   }
   params(): Params {
