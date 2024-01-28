@@ -82,6 +82,8 @@ getTextCallbackId	(string)						(Required)
 		callback function for |ddu-column-attribute-getText|.
 		you can register callback function via |denops#callback#register()|.
 		NOTE: this callback function must return |Dictionary| like bellow.
+		NOTE: each name must be unique for the highlight group.
+		so the name should be `ddu-column-custom-{group}`.
 
 		{
 			text: string,
