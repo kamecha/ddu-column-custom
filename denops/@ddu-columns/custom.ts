@@ -5,7 +5,11 @@ import {
   GetTextResult,
 } from "https://deno.land/x/ddu_vim@v3.4.2/base/column.ts";
 import { ItemHighlight } from "https://deno.land/x/ddu_vim@v3.4.2/types.ts";
-import { Predicate, ensure, is } from "https://deno.land/x/unknownutil@v3.14.1/mod.ts";
+import {
+  ensure,
+  is,
+  Predicate,
+} from "https://deno.land/x/unknownutil@v3.14.1/mod.ts";
 
 export type Params = {
   getLengthCallbackId: string;
