@@ -4,21 +4,22 @@ import {
   GetTextArguments,
   GetTextResult,
 } from "https://deno.land/x/ddu_vim@v3.4.2/base/column.ts";
-import { ensure, is } from "https://deno.land/x/unknownutil@v3.14.1/mod.ts";
+import { ItemHighlight } from "https://deno.land/x/ddu_vim@v3.4.2/types.ts";
+import { Predicate, ensure, is } from "https://deno.land/x/unknownutil@v3.14.1/mod.ts";
 
 export type Params = {
   getLengthCallbackId: string;
   getTextCallbackId: string;
 };
 
-const isItemHighlight = is.ObjectOf({
+const isItemHighlight: Predicate<ItemHighlight> = is.ObjectOf({
   name: is.String,
   hl_group: is.String,
   col: is.Number,
   width: is.Number,
 });
 
-const isGetTextResult = is.ObjectOf({
+const isGetTextResult: Predicate<GetTextResult> = is.ObjectOf({
   text: is.String,
   highlights: is.OptionalOf(
     is.ArrayOf(
@@ -52,9 +53,7 @@ export class Column extends BaseColumn<Params> {
         args.columnParams.getTextCallbackId,
         args,
       ),
-      (x: unknown): x is GetTextResult => {
-        return isGetTextResult(x);
-      },
+      isGetTextResult,
     );
     return result;
   }
