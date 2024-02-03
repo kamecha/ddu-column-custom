@@ -51,17 +51,26 @@ this example displays "unko" in custom column.
 	  \}
 	endfunction
 
+	" define alias for custom column
+	" it is useful to define other column name
+	call ddu#custom#alias('column', 'hoge', 'custom')
+
+	" register custom column callback to defined alias
 	call ddu#custom#patch_global(#{
-	    \   columns: [
-	    \     #{
-	    \       name: "custom",
-	    \       params: #{
-	    \         getLengthCallbackId: denops#callback#register({ _ -> 4 }),
-	    \         getTextCallbackId: denops#callback#register(function('s:hoge'))
-	    \       }
-	    \     }
-	    \   ],
-	    \ })
+	  \  columnParams: #{
+	  \    hoge: #{
+	  \      getLengthCallbackId: denops#callback#register({ _ -> 4 }),
+	  \      getTextCallbackId: denops#callback#register(function('s:hoge'))
+	  \    }
+	  \  }
+	  \})
+
+	" start ddu with custom column
+	call ddu#start(#{
+	  \  sources: [
+	  \    #{ name: "file", options: #{ columns: ['hoge'] } }
+	  \  ]
+	  \})
 <
 
 you should read |ddu-create-column| for more details.
